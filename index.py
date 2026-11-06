@@ -16,8 +16,6 @@ else:
 MODEL = 'gpt-6-luna'
 openai = OpenAI()
 
-# links = fetch_website_links("https://edwarddonner.com")
-
 link_system_prompt = """
 You are provided with a list of links found on a webpage.
 You are able to decide which of the links would be most relevant to include in a brochure about the company,
@@ -47,9 +45,6 @@ Links (some might be relative links):
     return user_prompt
 
 
-# print(get_links_user_prompt("https://edwarddonner.com"))
-
-
 def select_relevant_links(url):
     print(f"Selecting relevant links for {url} by calling {MODEL}")
     response = openai.chat.completions.create(
@@ -66,8 +61,6 @@ def select_relevant_links(url):
     print(f"Found {len(links['links'])} relevant links")
     return links
 
-# select_relevant_links("https://edwarddonner.com")
-
 def fetch_page_and_all_relevant_links(url):
     contents = fetch_website_contents(url)
     relevant_links = select_relevant_links(url)
@@ -76,8 +69,6 @@ def fetch_page_and_all_relevant_links(url):
         result += f"\n\n### Link: {link['type']}\n"
         result += fetch_website_contents(link["url"])
     return result
-
-# print(fetch_page_and_all_relevant_links("https://huggingface.co"))
 
 
 brochure_system_prompt = """
@@ -97,8 +88,6 @@ use this information to build a short brochure of the company in markdown withou
     user_prompt = user_prompt[:5_000] # Truncate if more than 5,000 characters
     return user_prompt
 
-# get_brochure_user_prompt("HuggingFace", "https://huggingface.co")
-
 
 def create_brochure(company_name, url):
     response = openai.chat.completions.create(
@@ -114,4 +103,4 @@ def create_brochure(company_name, url):
 
     print(result)
 
-create_brochure("HuggingFace", "https://huggingface.co")
+create_brochure("Gelephu Mindfulness City", "https://gmc.bt/")
